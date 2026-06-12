@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="uk" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Єврейська Месіанська Громада «Менора» у Хмельницькому — спільнота євреїв та неєвреїв, які вірять в Ієшуа (Ісуса) як Месію Ізраїлю. Шабат, вивчення Тори, біблійні свята.">
+    <meta name="theme-color" content="#1e3a8a">
+    <meta property="og:title" content="Єврейська Месіанська Громада «Менора»">
+    <meta property="og:description" content="Ласкаво просимо до громади «Менора» у Хмельницькому. Разом ми слідуємо біблійним традиціям, вивчаємо Слово та допомагаємо один одному.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/logo.png">
+    <title>Єврейська Месіанська Громада «Менора»</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <!-- Підключення Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Підключення шрифту Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-display { font-family: 'Playfair Display', Georgia, serif; }
+
+        /* ── Glassmorphism Header ── */
+        header {
+            background: rgba(255, 255, 255, 0.70) !important;
+            backdrop-filter: blur(24px) saturate(200%) !important;
+            -webkit-backdrop-filter: blur(24px) saturate(200%) !important;
+            border-bottom: 1px solid rgba(203, 213, 225, 0.5) !important;
+            box-shadow: 0 1px 24px rgba(15, 23, 42, 0.06) !important;
+        }
+
+        /* ── Nav underline animation ── */
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+            border-radius: 2px;
+            transition: width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* ── Glow primary button ── */
+        .btn-primary {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1d4ed8 100%);
+            box-shadow: 0 4px 20px rgba(30, 58, 138, 0.35);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 6px 32px rgba(30, 58, 138, 0.55);
+            transform: translateY(-1px);
+        }
+        .btn-primary:active { transform: scale(0.97); }
+
+        /* ── Hero CTA pulse ring ── */
+        @keyframes heroRing {
+            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.45); }
+            70% { box-shadow: 0 0 0 12px rgba(59, 130, 246, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        }
+        .btn-hero-pulse {
+            animation: heroRing 2.4s ease-out infinite;
+        }
+
+        /* ── Card hover glow ── */
+        .card-hover-glow {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover-glow:hover {
+            box-shadow: 0 20px 60px rgba(30, 58, 138, 0.1), 0 4px 16px rgba(30, 58, 138, 0.08);
+            transform: translateY(-4px);
+            border-color: rgba(147, 197, 253, 0.6) !important;
+        }
+
+        /* ── Stats section background pattern ── */
+        .stats-bg {
+            background-color: #0f2463;
+            background-image:
+                radial-gradient(ellipse at 20% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+        }
+
+        /* ── Stats number shimmer after count ── */
+        @keyframes shimmer {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; text-shadow: 0 0 20px rgba(147, 197, 253, 0.8); }
+            100% { opacity: 1; }
+        }
+        .stats-number.done {
+            animation: shimmer 0.6s ease-out 0.1s;
+        }
+
+        /* Плавна анімація FAQ */
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .faq-content.open {
+            max-height: 500px;
+            opacity: 1;
+            padding-top: 0;
+            padding-bottom: 1.25rem;
+        }
+
+        /* Плавне розгортання блоку "Детальніше" */
+        .expand-content {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.5s ease, opacity 0.4s ease;
+        }
+        .expand-content.open {
+            max-height: 600px;
+            opacity: 1;
+        }
+
+        /* Анімація появи при скролі */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Анімоване мобільне меню */
+        #mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+        }
+        #mobile-menu.open {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        /* Анімації появи в Hero */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .animation-delay-200 {
+            animation-delay: 200ms;
+        }
+        .animation-delay-400 {
+            animation-delay: 400ms;
+        }
+
+        /* Мобільний скрол галереї (тільки для маленьких екранів) */
+        @media (max-width: 767px) {
+            .mobile-scroll-container {
+                display: flex !important;
+                overflow-x: auto !important;
+                scroll-snap-type: x mandatory !important;
+                scroll-behavior: smooth !important;
+                -webkit-overflow-scrolling: touch !important;
+                padding-bottom: 1rem !important;
+                gap: 1rem !important;
+            }
+            .mobile-scroll-container > div {
+                flex: 0 0 85% !important;
+                scroll-snap-align: center !important;
+                aspect-ratio: 4/3 !important;
+            }
+            /* Ховаємо скроллбар */
+            .mobile-scroll-container::-webkit-scrollbar {
+                display: none !important;
+            }
+            .mobile-scroll-container {
+                -ms-overflow-style: none !important;
+                scrollbar-width: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+     <!-- HEADER (Шапка сайту) -->
+    <header class="sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 h-20 flex items-center justify-between relative">
+            
+            <!-- Посилання-логотип: тепер містить і картинку, і текст -->
+            <a href="#" class="flex items-center space-x-3.5">
+                <!-- Логотип громади з папки assets -->
+                <img src="assets/logo.png" class="w-12 h-12 object-contain flex-shrink-0" alt="Логотип Менора">
+                
+                <!-- Текстовий блок: змінено на благородний темно-синій -->
+                <div class="flex flex-col">
+                    <span class="text-xs font-bold text-blue-900 tracking-widest uppercase">Єврейська месіанська</span>
+                    <span class="text-xl font-extrabold text-slate-900 tracking-tight sm:text-2xl">ГРОМАДА «МЕНОРА»</span>
+                </div>
+            </a>
+
+            <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium text-slate-600">
+                <a href="#about" data-nav="about" class="nav-link hover:text-blue-950 transition-all duration-200 relative py-1">Про нас</a>
+                <a href="#schedule" data-nav="schedule" class="nav-link hover:text-blue-950 transition-all duration-200 relative py-1">Розклад</a>
+                <a href="#gallery" data-nav="gallery" class="nav-link hover:text-blue-950 transition-all duration-200 relative py-1">Життя громади</a>
+                <a href="#faq" data-nav="faq" class="nav-link hover:text-blue-950 transition-all duration-200 relative py-1">Питання</a>
+                <a href="#tzedakah" data-nav="tzedakah" class="nav-link hover:text-blue-950 transition-all duration-200 relative py-1">Цдака</a>
+                <a href="#contacts" data-nav="contacts" class="btn-primary inline-flex items-center justify-center px-5 py-2.5 text-white font-bold rounded-xl active:scale-95">
+                    Контакти
+                </a>
+            </nav>
+
+            <button id="menu-btn" aria-label="Відкрити меню" class="lg:hidden p-2 text-slate-600 hover:text-blue-950 focus:outline-none relative z-50">
+                <svg id="burger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+                
+                <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="lg:hidden absolute top-20 left-0 w-full bg-white border-b border-slate-200 p-6 z-40 shadow-xl">
+            <nav class="flex flex-col items-center space-y-5 text-base font-semibold text-slate-600">
+                <a href="#about" class="hover:text-blue-950 transition-colors w-full text-center py-1">Про нас</a>
+                <a href="#schedule" class="hover:text-blue-950 transition-colors w-full text-center py-1">Розклад</a>
+                <a href="#gallery" class="hover:text-blue-950 transition-colors w-full text-center py-1">Життя громади</a>
+                <a href="#faq" class="hover:text-blue-950 transition-colors w-full text-center py-1">Питання</a>
+                <a href="#tzedakah" class="hover:text-blue-950 transition-colors w-full text-center py-1">Цдака</a>
+                <a href="#contacts" class="btn-primary w-full text-center inline-flex items-center justify-center px-5 py-3 text-white font-bold rounded-xl active:scale-95">
+                    Контакти
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative bg-slate-900 overflow-hidden min-h-[70vh] flex items-center">
+        <div id="hero-slideshow" class="absolute inset-0 z-0">
+            <img src="images/hero-bg-1.webp" 
+                alt="Фон 1" class="slide absolute inset-0 w-full h-full object-cover opacity-45 transition-opacity duration-1500">
+            
+            <img src="images/hero-bg-2.webp" 
+                alt="Фон 2" class="slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1500" loading="lazy">
+            
+            <img src="images/hero-bg-3.webp" 
+                alt="Фон 3" class="slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1500" loading="lazy">
+            
+            <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/60 to-transparent z-10"></div>
+        </div>
+
+        <div class="relative z-10 max-w-6xl mx-auto px-4 py-20 w-full">
+            <div class="max-w-2xl text-center md:text-left">
+                <!-- Плашка адаптована під гармонійний синій відтінок -->
+                <!-- Цитата-плашка у вигляді рамки -->
+                <div class="inline-flex flex-wrap items-center gap-x-3 gap-y-1.5 px-4 py-2 rounded-full border border-blue-500/20 bg-blue-950/20 mb-8 opacity-0 animate-fade-in-up">
+                    <span class="text-xs font-bold text-blue-400 tracking-wider">Числа 6:24</span>
+                    <span class="text-slate-300 text-xs sm:text-sm">«Нехай Господь благословить тебе і збереже тебе!»</span>
+                </div>
+
+                <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-[1.1] mb-6 opacity-0 animate-fade-in-up animation-delay-200">
+                    Громада <span class="text-blue-300">«Менора»</span>
+                </h1>
+
+                <p class="text-base md:text-lg text-slate-300/90 mb-10 leading-relaxed max-w-xl opacity-0 animate-fade-in-up animation-delay-400">
+                    Ми — спільнота євреїв та неєвреїв, які вірять, що Ієшуа (Ісус) є обіцяним Месією Ізраїлю. Разом ми слідуємо біблійним традиціям, вивчаємо Слово та допомагаємо один одному.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center md:justify-start gap-4 opacity-0 animate-fade-in-up animation-delay-400">
+                    <a href="#schedule" class="btn-primary btn-hero-pulse text-white text-center font-bold px-8 py-4 rounded-xl active:scale-95">
+                        Відвідати Шабат
+                    </a>
+                    <a href="#about" class="text-white/60 hover:text-white text-center text-sm font-medium py-2 transition-colors flex items-center justify-center gap-2 group">
+                        Дізнатися більше
+                        <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-20 bg-white reveal">
+        <div class="max-w-6xl mx-auto px-4">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
+                <div class="space-y-6">
+                    <div class="space-y-2">
+                        <h2 class="text-xs font-bold text-blue-900 tracking-widest uppercase">Хто ми</h2>
+                        <h3 class="font-display text-3xl font-bold text-slate-900 tracking-tight sm:text-4xl">
+                            Про нашу громаду
+                        </h3>
+                    </div>
+                    <!-- Основний текст (завжди видимий) -->
+                    <p class="text-slate-600 text-base mb-4 leading-relaxed">
+                        Месіанське єврейство об'єднує віру в Ієшуа (Ісуса) як Месію Ізраїлю та збереження культурної, історичної та духовної спадщини нашого народу.
+                    </p>
+                    <p class="text-slate-600 text-base mb-4 leading-relaxed">
+                        Ми прагнемо створити простір, де кожен відчуває себе частиною великої мішпахи (родини), де можна глибоко вивчати Слово Боже, молитися і підтримувати один одного у повсякденному житті.
+                    </p>
+
+                    <!-- Прихований блок (розгортається за кліком) -->
+                    <div id="expanded-about" class="expand-content">
+                        <p class="text-slate-600 text-base mb-4 leading-relaxed">
+                            Для нас важливо, щоб віра підтверджувалася конкретними діями, тому громада є активною частиною суспільства. Ми беремо участь у волонтерських ініціативах, підтримуємо благодійні проєкти та регулярно допомагаємо нашим захисникам у ЗСУ. У щоденних молитвах ми завжди згадуємо про мир, захист та благословення для України та Ізраїлю.
+                        </p>
+                        <p class="text-slate-600 text-base mb-4 leading-relaxed">
+                            Крім того, ми проводимо відкриті культурні заходи та фестивалі, які дозволяють усім охочим ближче познайомитися з біблійною спадщиною у живому та сучасному форматі.
+                        </p>
+                    </div>
+
+                    <!-- Акуратна кнопка-стрілочка -->
+                    <button id="toggle-about-btn" class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm focus:outline-none mt-2 group cursor-pointer">
+                        <span id="toggle-about-text">Детальніше</span>
+                        <svg id="toggle-about-arrow" class="w-4 h-4 ml-1 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="relative h-72 sm:h-96 bg-slate-100 rounded-2xl overflow-hidden shadow-md group">
+                    <img src="images/about-community.webp" 
+                        alt="Життя спільноти" 
+                        loading="lazy"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-103">
+                    <div class="absolute inset-0 bg-slate-900/5"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Картка 1 -->
+                <div class="p-8 bg-slate-50/60 rounded-2xl border border-slate-100 card-hover-glow group">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-900 rounded-xl flex items-center justify-center mb-6 text-xl transition-transform duration-300 group-hover:scale-110">
+                        📖
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 mb-3">Вивчення Тори</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Глибоке вивчення Писання (Танаху та Брит Хадаша). Ми прагнемо не просто накопичувати знання, а вчитися практично застосовувати Божу мудрість і заповіді у щоденному житті.
+                    </p>
+                </div>
+
+                <!-- Картка 2 -->
+                <div class="p-8 bg-slate-50/60 rounded-2xl border border-slate-100 card-hover-glow group">
+                    <div class="w-12 h-12 bg-indigo-100 text-indigo-800 rounded-xl flex items-center justify-center mb-6 text-xl transition-transform duration-300 group-hover:scale-110">
+                        🕯️
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 mb-3">Традиції</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Святкування Шабату та біблійних свят (Песах, Сукот, Рош га-Шана і т.д.) — це не просто данина історії, а наш особливий час для відпочинку, зустрічі з Богом та святкування у колі духовної родини.
+                    </p>
+                </div>
+
+                <!-- Картка 3 -->
+                <div class="p-8 bg-slate-50/60 rounded-2xl border border-slate-100 card-hover-glow group">
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center mb-6 text-xl transition-transform duration-300 group-hover:scale-110">
+                        🤝
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 mb-3">Спільнота</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Взаємна підтримка, воркшопи, домашні групи, капеланське служіння, волонтерство, а також турбота про підростаюче покоління.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- STATS SECTION -->
+    <section id="stats" class="py-16 stats-bg reveal">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+
+                <!-- 11 років -->
+                <div class="flex flex-col items-center text-center group">
+                    <div class="w-12 h-12 mb-4 flex items-center justify-center rounded-xl bg-white/10 text-white group-hover:bg-white/20 transition-colors duration-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <div class="font-display text-4xl font-black text-white mb-1 stats-number" data-target="11" data-suffix="">0</div>
+                    <div class="text-[11px] font-bold uppercase tracking-widest text-blue-200 leading-tight">років</div>
+                    <div class="text-blue-300 text-xs mt-1">громаді (з 2015)</div>
+                </div>
+
+                <!-- 50+ свят -->
+                <div class="flex flex-col items-center text-center group">
+                    <div class="w-12 h-12 mb-4 flex items-center justify-center rounded-xl bg-white/10 text-white group-hover:bg-white/20 transition-colors duration-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M12 2l1.5 4.5H18l-3.75 2.75 1.5 4.5L12 11l-3.75 2.75 1.5-4.5L6 6.5h4.5z"/>
+                            <circle cx="12" cy="12" r="10"/>
+                        </svg>
+                    </div>
+                    <div class="flex items-start justify-center">
+                        <div class="font-display text-4xl font-black text-white mb-1 stats-number" data-target="50" data-suffix="+">0</div>
+                    </div>
+                    <div class="text-[11px] font-bold uppercase tracking-widest text-blue-200 leading-tight">біблійних свят</div>
+                    <div class="text-blue-300 text-xs mt-1">відзначено разом</div>
+                </div>
+
+                <!-- 30+ фестивалів -->
+                <div class="flex flex-col items-center text-center group">
+                    <div class="w-12 h-12 mb-4 flex items-center justify-center rounded-xl bg-white/10 text-white group-hover:bg-white/20 transition-colors duration-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M3 11l19-9-9 19-2-8-8-2z"/>
+                        </svg>
+                    </div>
+                    <div class="flex items-start justify-center">
+                        <div class="font-display text-4xl font-black text-white mb-1 stats-number" data-target="30" data-suffix="+">0</div>
+                    </div>
+                    <div class="text-[11px] font-bold uppercase tracking-widest text-blue-200 leading-tight">фестивалів та івентів</div>
+                    <div class="text-blue-300 text-xs mt-1">відкрито для міста</div>
+                </div>
+
+                <!-- 10+ проектів -->
+                <div class="flex flex-col items-center text-center group">
+                    <div class="w-12 h-12 mb-4 flex items-center justify-center rounded-xl bg-white/10 text-white group-hover:bg-white/20 transition-colors duration-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+                        </svg>
+                    </div>
+                    <div class="flex items-start justify-center">
+                        <div class="font-display text-4xl font-black text-white mb-1 stats-number" data-target="10" data-suffix="+">0</div>
+                    </div>
+                    <div class="text-[11px] font-bold uppercase tracking-widest text-blue-200 leading-tight">волонтерських проектів</div>
+                    <div class="text-blue-300 text-xs mt-1">допомога та служіння</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SCHEDULE SECTION -->
+    <section id="schedule" class="py-20 bg-slate-50 border-t border-b border-slate-100 reveal">
+        <div class="max-w-6xl mx-auto px-4">
+            
+            <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                <h2 class="text-xs font-bold text-blue-900 tracking-widest uppercase">Коли ми збираємося</h2>
+                <h3 class="font-display text-3xl font-bold text-slate-900 tracking-tight sm:text-4xl">
+                    Розклад наших зустрічей
+                </h3>
+                <p class="text-slate-500 text-sm">
+                    Ми завжди раді гостям. Приєднуйтеся до спілкування, молитви та вивчення Слова.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                
+                <!-- Вівторок -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-xs transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col h-full">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">Щовівторка</span>
+                        <span class="text-sm font-bold text-slate-700">19:00</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-slate-900 mb-2">Вивчення Тори та Писання</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">
+                        Розбір біблійних текстів у теплому колі, обговорення єврейського контексту Нового Завіту та практичне застосування Слово.
+                    </p>
+                    <div class="pt-4 border-t border-slate-100 flex items-center text-xs text-slate-400">
+                        📍 <span class="ml-1.5">Онлайн в Telegram</span>
+                    </div>
+                </div>
+
+                <!-- Субота (Головна зустріч) -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-blue-900 shadow-md ring-4 ring-blue-900/5 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 flex flex-col h-full relative overflow-hidden">
+                    <div class="absolute top-0 right-0 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-bl-xl" style="background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1d4ed8 100%);">
+                        Головна зустріч
+                    </div>
+                    
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">Щосуботи (Шабат)</span>
+                        <span class="text-sm font-bold text-slate-900">12:00</span>
+                    </div>
+                    <h4 class="text-xl font-extrabold text-slate-950 mb-2">Святкування Шабату</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 flex-grow">
+                        Зустріч, яка наповнює силами на весь наступний тиждень. Прославляємо Бога, молимося, розбираємо Слово та відпочиваємо за теплою розмовою і чаєм після завершення.
+                    </p>
+                    <!-- Кнопка додавання в календар -->
+                    <a id="add-to-calendar-btn" href="javascript:void(0)" onclick="openCalendarMenu(event)" class="flex items-center justify-center gap-2 w-full py-2.5 mb-4 bg-blue-50 hover:bg-blue-100 text-blue-900 font-semibold text-sm rounded-xl transition-all border border-blue-100 active:scale-95 cursor-pointer">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        Додати в календар
+                    </a>
+                    <!-- Dropdown меню календаря -->
+                    <div id="calendar-menu" class="hidden absolute left-6 right-6 bottom-24 bg-white border border-slate-200 rounded-2xl shadow-xl z-30 overflow-hidden">
+                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%D0%A8%D0%B0%D0%B1%D0%B0%D1%82+%E2%80%94+%D0%93%D1%80%D0%BE%D0%BC%D0%B0%D0%B4%D0%B0+%C2%AB%D0%9C%D0%B5%D0%BD%D0%BE%D1%80%D0%B0%C2%BB&dates=20250607T090000Z%2F20250607T120000Z&recur=RRULE:FREQ%3DWEEKLY;BYDAY%3DSA&location=%D0%B2%D1%83%D0%BB%D0%B8%D1%86%D1%8F+%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD%D0%B0+%D0%A8%D1%83%D1%85%D0%B5%D0%B2%D0%B8%D1%87%D0%B0%2C+8%2C+%D0%A5%D0%BC%D0%B5%D0%BB%D1%8C%D0%BD%D0%B8%D1%86%D1%8C%D0%BA%D0%B8%D0%B9&details=%D0%A9%D0%BE%D1%82%D0%B8%D0%B6%D0%BD%D0%B5%D0%B2%D0%B5+%D1%88%D0%B0%D0%B1%D0%B0%D1%82%D0%BD%D1%94+%D1%81%D0%BB%D1%83%D0%B6%D1%96%D0%BD%D0%BD%D1%8F+%D0%BE+12:00" target="_blank" class="flex items-center gap-3 px-5 py-3.5 hover:bg-slate-50 transition-colors text-sm text-slate-700 font-medium border-b border-slate-100">
+                            <svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+                            Google Calendar
+                        </a>
+                        <a href="javascript:void(0)" onclick="downloadICS(event)" class="flex items-center gap-3 px-5 py-3.5 hover:bg-slate-50 transition-colors text-sm text-slate-700 font-medium">
+                            <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                            Apple Calendar / iCal
+                        </a>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center text-xs text-slate-500 font-medium">
+                        📍 <span class="ml-1.5 text-slate-700">Основний зал громади</span>
+                    </div>
+                </div>
+
+                <!-- Протягом тижня -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-xs transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col h-full">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">Протягом тижня</span>
+                        <span class="text-sm font-bold text-slate-700">За домовленістю</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-slate-900 mb-2">Воркшопи, домашні групи та спілкування</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">
+                        Практичні воркшопи на актуальні теми, а також затишне спілкування у невеликих групах по всьому місту для ближчого знайомства, взаємної підтримки, молитви та чаювання.
+                    </p>
+                    
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+                        <div class="flex items-center">
+                            📍 <span class="ml-1.5">Різні локації</span>
+                        </div>
+                        <a href="#contacts" class="text-blue-600 hover:text-blue-700 font-semibold cursor-pointer flex items-center transition-colors">
+                            Уточнити в адміна
+                            <svg class="w-3 h-3 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Таймер до наступного Шабату -->
+            <div class="mt-12 bg-white border border-blue-100 rounded-2xl p-6 shadow-sm flex flex-col sm:flex-row items-center gap-6 reveal">
+                <div class="flex items-center justify-center w-14 h-14 rounded-xl bg-blue-50 flex-shrink-0">
+                    <svg class="w-7 h-7 text-blue-900" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <!-- Лівий свічник -->
+                        <path d="M6 21h4M8 21v-4M7 17h2" />
+                        <!-- Ліва свічка -->
+                        <line x1="8" y1="17" x2="8" y2="8" stroke-width="2.5" />
+                        <!-- Лівий вогник -->
+                        <path d="M8 3.5c.6 1.2.6 2.2 0 3-.6-.8-.6-1.8 0-3z" fill="currentColor" stroke="none" />
+                        
+                        <!-- Правий свічник -->
+                        <path d="M14 21h4M16 21v-4M15 17h2" />
+                        <!-- Права свічка -->
+                        <line x1="16" y1="17" x2="16" y2="8" stroke-width="2.5" />
+                        <!-- Правий вогник -->
+                        <path d="M16 3.5c.6 1.2.6 2.2 0 3-.6-.8-.6-1.8 0-3z" fill="currentColor" stroke="none" />
+                    </svg>
+                </div>
+                <div class="flex-1 text-center sm:text-left">
+                    <p class="text-xs font-bold text-blue-900 uppercase tracking-widest mb-1">Наступний Шабат</p>
+                    <p class="text-slate-500 text-sm">Щосуботи о полудні — Основний зал громади, вул. Романа Шухевича, 8</p>
+                </div>
+                <div class="flex-shrink-0">
+                    <!-- Таймер зворотного відліку -->
+                    <div id="countdown-timer" class="flex gap-3 sm:gap-4">
+                        <div class="flex flex-col items-center text-white rounded-xl px-4 py-2.5 min-w-[58px] btn-primary">
+                            <span id="cd-days" class="text-2xl font-extrabold leading-none">--</span>
+                            <span class="text-[10px] font-medium opacity-70 mt-0.5">днів</span>
+                        </div>
+                        <div class="flex flex-col items-center bg-slate-100 text-slate-800 rounded-xl px-4 py-2.5 min-w-[58px]">
+                            <span id="cd-hours" class="text-2xl font-extrabold leading-none">--</span>
+                            <span class="text-[10px] font-medium text-slate-500 mt-0.5">годин</span>
+                        </div>
+                        <div class="flex flex-col items-center bg-slate-100 text-slate-800 rounded-xl px-4 py-2.5 min-w-[58px]">
+                            <span id="cd-mins" class="text-2xl font-extrabold leading-none">--</span>
+                            <span class="text-[10px] font-medium text-slate-500 mt-0.5">хвил</span>
+                        </div>
+                    </div>
+                    <!-- Блок привітання під час Шабату -->
+                    <div id="countdown-shabbat-shalom" class="hidden text-center bg-emerald-50 border border-emerald-100 px-6 py-2 rounded-2xl flex-shrink-0">
+                        <span class="text-xl">🎉</span>
+                        <p class="text-emerald-950 font-bold text-sm mt-0.5">Шабат Шалом!</p>
+                        <p class="text-emerald-700/80 text-xs">Служіння розпочалось о 12:00</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- GALLERY SECTION -->
+    <section id="gallery" class="py-20 bg-white reveal">
+        <div class="max-w-6xl mx-auto px-4">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div class="space-y-2">
+                    <h2 class="text-xs font-bold text-blue-900 tracking-widest uppercase">Наші будні та свята</h2>
+                    <h3 class="font-display text-3xl font-bold text-slate-900 tracking-tight sm:text-4xl">
+                        Життя громади в об'єктиві
+                    </h3>
+                </div>
+                <p class="text-slate-500 text-sm max-w-md mt-4 md:mt-0">
+                    Ми любимо проводити час разом не лише під час офіційних служінь. Ось кілька моментів з нашого спільного життя, свят та подорожей.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mobile-scroll-container">
+                
+                <!-- Картка 1 -->
+                <div class="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-md group bg-slate-100">
+                    <img src="images/gallery-shabbat.webp" 
+                        alt="Шабатня зустріч" 
+                        loading="lazy"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/15 to-transparent sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 sm:p-6">
+                        <span class="text-blue-400 text-[10px] sm:text-xs font-semibold uppercase tracking-wider mb-1">Служіння</span>
+                        <h4 class="text-white font-bold text-sm sm:text-lg">Шабатня молитва</h4>
+                    </div>
+                </div>
+
+                <!-- Картка 2 -->
+                <div class="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-md group bg-slate-100">
+                    <img src="images/gallery-pesach.webp" 
+                        alt="Святкування Песаху" 
+                        loading="lazy"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/15 to-transparent sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 sm:p-6">
+                        <span class="text-blue-400 text-[10px] sm:text-xs font-semibold uppercase tracking-wider mb-1">Свята</span>
+                        <h4 class="text-white font-bold text-sm sm:text-lg">Спільне святкування Песаху</h4>
+                    </div>
+                </div>
+
+                <!-- Картка 3 -->
+                <div class="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-md group bg-slate-100">
+                    <img src="images/gallery-worship.webp" 
+                        alt="Прославлення в танці" 
+                        loading="lazy"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/15 to-transparent sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 sm:p-6">
+                        <span class="text-blue-400 text-[10px] sm:text-xs font-semibold uppercase tracking-wider mb-1">Прославлення</span>
+                        <h4 class="text-white font-bold text-sm sm:text-lg">Прославлення в танці</h4>
+                    </div>
+                </div>
+
+                <!-- Картка 4 -->
+                <div class="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-md group bg-slate-100">
+                    <img src="images/gallery-shabbat-school.webp" 
+                        alt="Дитяче служіння" 
+                        loading="lazy"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/15 to-transparent sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 sm:p-6">
+                        <span class="text-blue-400 text-[10px] sm:text-xs font-semibold uppercase tracking-wider mb-1">Діти</span>
+                        <h4 class="text-white font-bold text-sm sm:text-lg">Заняття шабатньої дитячої школи</h4>
+                    </div>
+                </div>
+
+                <!-- Картка 5 -->
+                <div class="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-md group bg-slate-100">
+                    <img src="images/gallery-seminar.webp" 
+                        alt="Семінар" 
+                        loading="lazy"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/15 to-transparent sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 sm:p-6">
+                        <span class="text-blue-400 text-[10px] sm:text-xs font-semibold uppercase tracking-wider mb-1">Навчання</span>
+                        <h4 class="text-white font-bold text-sm sm:text-lg">Тематичні біблійні семінари</h4>
+                    </div>
+                </div>
+
+                <!-- Картка 6 -->
+                <div class="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-md group bg-slate-100">
+                    <img src="images/gallery-festival.webp" 
+                        alt="Jewish Open Space" 
+                        loading="lazy"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/15 to-transparent sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 sm:p-6">
+                        <span class="text-blue-400 text-[10px] sm:text-xs font-semibold uppercase tracking-wider mb-1">Фестивалі</span>
+                        <h4 class="text-white font-bold text-sm sm:text-lg">Jewish Open Space</h4>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Dot-iндикатори для мобiльної галереї -->
+            <div id="gallery-dots" class="flex md:hidden justify-center gap-2 mt-5">
+                <span class="gallery-dot w-4 h-2 rounded-full bg-blue-900 transition-all duration-300"></span>
+                <span class="gallery-dot w-2 h-2 rounded-full bg-slate-300 transition-all duration-300"></span>
+                <span class="gallery-dot w-2 h-2 rounded-full bg-slate-300 transition-all duration-300"></span>
+                <span class="gallery-dot w-2 h-2 rounded-full bg-slate-300 transition-all duration-300"></span>
+                <span class="gallery-dot w-2 h-2 rounded-full bg-slate-300 transition-all duration-300"></span>
+                <span class="gallery-dot w-2 h-2 rounded-full bg-slate-300 transition-all duration-300"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section id="faq" class="py-20 bg-slate-50 reveal">
+        <div class="max-w-3xl mx-auto px-4">
+            
+            <div class="text-center mb-12">
+                <h2 class="font-display text-3xl font-bold text-slate-900 tracking-tight sm:text-4xl">Популярні питання</h2>
+                <p class="mt-3 text-lg text-slate-600">Відповіді на те, що найчастіше цікавить гостей нашої громади</p>
+            </div>
+
+            <div class="space-y-4">
+
+                <div class="faq-item bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden transition-all duration-200">
+                    <button class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-slate-800 hover:text-blue-900 gap-4">
+                        <span>Як проходить шабатнє служіння і що потрібно знати перед першим візитом?</span>
+                        <svg class="faq-arrow w-5 h-5 text-slate-400 transition-transform duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-content p-5 text-slate-600 text-sm leading-relaxed border-t border-slate-50">
+                        Наші зустрічі проходять у теплій атмосфері й поєднують живе музичне прославлення, щиру молитву та глибоке вивчення Писання. Ми не перевантажуємо служіння складною обрядовістю, а фокусуємося на живому спілкуванні з Богом. Якогось особливого дрес-коду немає, достатньо буде Kosher Look. Також після завершення ми завжди збираємося разом на чай та каву, щоб ближче познайомитися й поспілкуватися в колі друзів.
+                    </div>
+                </div>
+
+                <div class="faq-item bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden transition-all duration-200">
+                    <button class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-slate-800 hover:text-blue-900 gap-4">
+                        <span>Чи обов'язково бути євреєм, щоб відвідувати вашу громаду?</span>
+                        <svg class="faq-arrow w-5 h-5 text-slate-400 transition-transform duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-content p-5 text-slate-600 text-sm leading-relaxed border-t border-slate-50">
+                        Ні, абсолютно не обов'язково! Наша громада відкрита для людей будь-якого етнічного походження та національності. Ми щиро раді кожному, хто прагне пізнавати Бога. Месіанський юдаїзм — це простір, де євреї та неєвреї в повній єдності, любові та взаємоповазі разом вірять в Ієшуа (Ісуса) як Спасителя, вивчають Святе Писання та святкують біблійні свята.
+                    </div>
+                </div>
+
+                <div class="faq-item bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden transition-all duration-200">
+                    <button class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-slate-800 hover:text-blue-900 gap-4">
+                        <span>Що таке «Цдака» і як використовуються пожертвування?</span>
+                        <svg class="faq-arrow w-5 h-5 text-slate-400 transition-transform duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-content p-5 text-slate-600 text-sm leading-relaxed border-t border-slate-50">
+                        Цдака — це єврейська традиція доброчинності та відновлення справедливості. Усі добровільні пожертвування йдуть на забезпечення життєдіяльності громади: оренду залу для служінь, організацію свят, благодійні проекти та допомогу людям, які опинилися в скрутному становищі.
+                    </div>
+                </div>
+
+                <div class="faq-item bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden transition-all duration-200">
+                    <button class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-slate-800 hover:text-blue-900 gap-4">
+                        <span>Чи можна привести дітей на шабатнє служіння?</span>
+                        <svg class="faq-arrow w-5 h-5 text-slate-400 transition-transform duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-content p-5 text-slate-600 text-sm leading-relaxed border-t border-slate-50">
+                        Так, з радістю! Під час проповіді діти можуть залишатись на Шабат-школу — окреме дитяче служіння з нашими педагогами, адаптоване до віку. Діти вчаться, грають і пізнають біблійні історії через цікаві ігри та творчі заняття. Після служіння всі збираються разом за чаєм, а діти радісно спілкуються з однолітками.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- TZEDAKAH SECTION -->
+    <section id="tzedakah" class="py-20 bg-slate-50 border-t border-slate-100 reveal">
+        <div class="max-w-6xl mx-auto px-4">
+            
+            <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                <h2 class="text-xs font-bold text-blue-900 tracking-widest uppercase">Цдака</h2>
+                <h3 class="font-display text-3xl font-bold text-slate-900 tracking-tight sm:text-4xl">
+                    Благодійність та підтримка служіння
+                </h3>
+                <p class="text-slate-500 text-sm leading-relaxed">
+                    У єврейській культурі підтримка громади та допомога ближньому — це виконання Божої заповіді про справедливість. Ваші добровільні пожертвування йдуть на розвиток служінь «Менори», оренду залу, проведення свят та соціальну допомогу тим, хто цього потребує.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                
+                <div class="space-y-6">
+                    <!-- Замінено акцент лінії цитати на глибокий синій -->
+                    <blockquote class="border-l-4 border-blue-900 pl-4 italic text-slate-700 text-base">
+                        «Кожен нехай дає за прихильністю серця, не з примусу й не з жалю, бо Бог любить того, хто дає з радістю!»
+                        <span class="block text-xs font-bold text-slate-500 mt-2 uppercase tracking-wider">— 2 до Коринтян 9:7</span>
+                    </blockquote>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Кожен внесок, незалежно від його розміру, є цінним внеском у поширення Слова Божого та зміцнення нашої спільноти. Ми щиро вдячні кожному, хто молитовно та фінансово стоїть разом із нами.
+                    </p>
+                    <!-- Переведено блок-підказку на ніжний синій лад -->
+                    <div class="p-5 bg-blue-50 rounded-2xl border border-blue-100/70 text-blue-900 text-xs leading-relaxed">
+                        <strong>💡 Важливо:</strong> Здійснюючи переказ через банк, у полі «Призначення платежу» обов'язково вказуйте: <span class="underline font-bold">Добровільне пожертвування на статутну діяльність</span>.
+                    </div>
+                </div>
+
+                <div class="relative md:min-h-[450px] w-full bg-white rounded-2xl border border-slate-200/60 shadow-md transition-all duration-300 hover:shadow-xl hover:border-blue-300 overflow-hidden">
+                    
+                    <div id="details-block" class="relative md:absolute md:inset-0 p-6 md:p-8 transition-opacity duration-300 opacity-100 z-10">
+                        <div class="absolute top-0 left-0 right-0 h-1.5 bg-blue-900"></div>
+                        
+                        <h4 class="text-lg md:text-xl font-bold text-slate-900 mb-4 md:mb-6 flex items-center">
+                            📦 <span class="ml-2">Банківські реквізити</span>
+                        </h4>
+                        
+                        <div class="space-y-3 md:space-y-4 text-sm">
+                            <div class="pb-3 border-b border-slate-100">
+                                <span class="text-xs text-slate-400 block uppercase tracking-wider font-semibold">Отримувач</span>
+                                <span class="font-bold text-slate-800 text-sm md:text-base">РО МЕСІАНСЬКА ГРОМАДА МЕНОРА</span>
+                            </div>
+                            
+                            <div class="pb-3 border-b border-slate-100">
+                                <span class="text-xs text-slate-400 block uppercase tracking-wider font-semibold">Банк отримувача</span>
+                                <span class="font-semibold text-slate-700">АТ КБ "ПРИВАТБАНК"</span>
+                            </div>
+
+                            <div class="pb-3 border-b border-slate-100">
+                                <span class="text-xs text-slate-400 block uppercase tracking-wider font-semibold">Рахунок IBAN</span>
+                                <span id="iban-field" onclick="copyManually()" class="cursor-pointer font-mono font-bold text-slate-900 tracking-wider text-xs md:text-sm block bg-slate-50 p-2 rounded-lg mt-1 select-all border border-slate-100 hover:bg-blue-50 transition-colors">
+                                    UA213052990000026001036004931
+                                </span>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div class="w-1/2">
+                                    <span class="text-xs text-slate-400 block uppercase tracking-wider font-semibold">ЄДРПОУ</span>
+                                    <span class="font-mono font-bold text-slate-800">44567608</span>
+                                </div>
+                                <div class="w-1/2">
+                                    <span class="text-xs text-slate-400 block uppercase tracking-wider font-semibold">МФО</span>
+                                    <span class="font-mono font-bold text-slate-800">305299</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="toggle-qr-btn" class="hidden md:block w-full mt-6 bg-blue-50 hover:bg-blue-100 text-blue-900 font-bold py-3 rounded-xl transition-all border border-blue-100 cursor-pointer">
+                            Показати QR-код для оплати
+                        </button>
+
+                        <div class="md:hidden mt-5 space-y-3">
+                            <button onclick="copyIban()" class="btn-primary w-full text-white text-center font-bold py-3 rounded-xl active:scale-95 cursor-pointer">
+                                <span id="copy-btn-text">Скопіювати реквізити</span>
+                            </button>
+                            <button id="toggle-qr-btn-mobile" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 text-center font-semibold py-3 rounded-xl transition-all active:scale-95 cursor-pointer border border-slate-200">
+                                Показати QR-код
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="qr-block" class="absolute inset-0 p-8 bg-white flex flex-col items-center justify-center transition-opacity duration-300 opacity-0 pointer-events-none z-20">
+                        <h4 class="text-lg font-bold text-slate-900 mb-4">Відскануйте для оплати</h4>
+                        <img src="assets/qr_code_menorah.png" alt="QR-код для пожертви" class="w-48 h-48 border border-slate-200 rounded-lg shadow-sm">
+                        
+                        <button id="hide-qr-btn" class="mt-6 text-slate-500 underline text-sm hover:text-slate-800 cursor-pointer">
+                            Назад до реквізитів
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CONTACTS SECTION -->
+    <section id="contacts" class="py-20 bg-slate-50 border-t border-slate-100 reveal">
+        <div class="max-w-6xl mx-auto px-4">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-stretch">
+                
+                <div class="flex flex-col justify-between space-y-8">
+                    <div class="space-y-3">
+                        <h2 class="text-xs font-bold text-blue-900 tracking-widest uppercase">Контакти</h2>
+                        <h3 class="font-display text-3xl font-bold text-slate-900 tracking-tight sm:text-4xl">
+                            Будемо раді спілкуванню
+                        </h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            Якщо у вас виникли запитання про діяльність громади «Менора», месіанське єврейство або ви просто хочете поспілкуватися — зв'яжіться з нами будь-яким зручним способом.
+                        </p>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-lg shadow-xs border border-slate-200/60 shrink-0">
+                                📍
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Адреса зустрічей</h4>
+                                <p class="text-slate-600 text-sm mt-0.5">вулиця Романа Шухевича, 8, Хмельницький, 29000</p>
+                                <a href="https://www.google.com/maps/dir/?api=1&destination=49.4402419%2C26.9463872" target="_blank" class="inline-flex items-center gap-1.5 mt-2 text-xs text-blue-700 hover:text-blue-900 font-semibold transition-colors group">
+                                    <svg class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                    Прокласти маршрут
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-lg shadow-xs border border-slate-200/60 shrink-0">
+                                📞
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Телефон</h4>
+                                <p class="text-slate-600 text-sm mt-0.5">
+                                    <a href="tel:+380970824546" class="hover:text-blue-600 transition-colors font-medium">+380 (97) 082-45-46</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-lg shadow-xs border border-slate-200/60 shrink-0">
+                                ✉️
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Електронна пошта</h4>
+                                <p class="text-slate-600 text-sm mt-0.5">
+                                    <a href="mailto:menora.khm@gmail.com" class="hover:text-blue-600 transition-colors font-medium">menora.khm@gmail.com</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Кнопки швидких дій для мобільних пристроїв -->
+                    <div class="grid grid-cols-2 gap-3 sm:hidden mt-2">
+                        <a href="tel:+380970824546" class="btn-primary flex items-center justify-center py-3 text-white font-bold text-sm rounded-xl active:scale-95 text-center">
+                            📞 Зателефонувати
+                        </a>
+                        <a href="mailto:menora.khm@gmail.com" class="flex items-center justify-center py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-sm rounded-xl transition-all border border-slate-200 active:scale-95 text-center">
+                            ✉️ Написати email
+                        </a>
+                    </div>
+
+                    <!-- БЛОК СОЦМЕРЕЖ ЗБЕРЕЖЕНО В ПЕРШОПОЧАТКОВОМУ ПРАВИЛЬНОМУ ВИГЛЯДІ -->
+                    <div class="mt-8 pt-6 border-t border-slate-100 pb-9">
+                        <div class="flex items-center space-x-4 mb-5">
+                            <div class="w-10 h-10 rounded-xl bg-white border border-slate-100 shadow-xs flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4.5 h-4.5 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-base font-bold text-slate-900">Соціальні мережі</h4>
+                                <p class="text-sm text-slate-500">Долучайтеся до нас онлайн</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <!-- Telegram -->
+                            <a href="https://t.me/MashiahBog" target="_blank" class="flex items-center justify-center px-4 py-3 bg-sky-50 hover:bg-sky-100 text-sky-700 font-medium text-sm rounded-xl transition-colors cursor-pointer border border-sky-100/50">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M21.418 4.919a1.183 1.183 0 0 0-1.118-.13L3.264 11.534a1.182 1.182 0 0 0-.09 2.14l4.57 2.128 1.83 5.61a1.185 1.185 0 0 0 1.956.463l2.843-2.613 4.9 3.61a1.181 1.181 0 0 0 1.841-.692l4.085-15.827a1.183 1.183 0 0 0-.881-1.336zm-11.233 11.3l-1.03-3.154 8.78-5.485-6.75 8.639z"/>
+                                </svg>
+                                Telegram
+                            </a>
+
+                            <!-- YouTube -->
+                            <a href="https://www.youtube.com/@kjmc.khm.menorah" target="_blank" class="flex items-center justify-center px-4 py-3 bg-red-50 hover:bg-red-100 text-red-700 font-medium text-sm rounded-xl transition-colors cursor-pointer border border-red-100/50">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                </svg>
+                                YouTube
+                            </a>
+
+                            <!-- Instagram -->
+                            <a href="https://www.instagram.com/kjmc.khmelnitskyi" target="_blank" class="flex items-center justify-center px-4 py-3 bg-pink-50 hover:bg-pink-100 text-pink-700 font-medium text-sm rounded-xl transition-colors cursor-pointer border border-pink-100/50">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                </svg>
+                                Instagram
+                            </a>
+
+                            <!-- Facebook -->
+                            <a href="https://www.facebook.com/menora.proskuriv" target="_blank" class="flex items-center justify-center px-4 py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-medium text-sm rounded-xl transition-colors cursor-pointer border border-indigo-100/50">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                                Facebook
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Карта Google Maps -->
+                <div class="relative min-h-[350px] md:min-h-full bg-slate-200 rounded-2xl overflow-hidden shadow-inner border border-slate-200 group">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1090.7866858424459!2d26.94638726288003!3d49.44024190856207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473206d7afe612f5%3A0xcd53778e215752d7!2z0KLQtdGA0LzQvtC_0LvQsNGB0YLQsNCy0YLQvtC80LDRgg!5e0!3m2!1sru!2sua!4v1779280877209!5m2!1sru!2sua" 
+                        class="absolute inset-0 w-full h-full border-0 group-hover:opacity-95 transition-opacity duration-300" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-300 pt-14 pb-8 mt-auto">
+        <div class="max-w-6xl mx-auto px-4">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-slate-700/60">
+
+                <!-- Лого і опис -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="text-2xl">🕎</div>
+                        <span class="text-white font-bold text-lg tracking-tight">Менора</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">Єврейська Месіанська Громада у Хмельницькому. Разом пізнаємо Бога, зберігаємо традиції та підтримуємо один одного.</p>
+                    <p class="text-blue-400/80 text-xs">«Хай Господь благословить тебе і збереже тебе!» — Числа 6:24</p>
+                </div>
+
+                <!-- Контакти -->
+                <div class="space-y-3">
+                    <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">Контакти</h4>
+                    <div class="flex items-start gap-3 text-sm">
+                        <span class="text-slate-500 mt-0.5">📍</span>
+                        <span class="text-slate-400">вул. Романа Шухевича, 8, Хмельницький</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm">
+                        <span class="text-slate-500">📞</span>
+                        <a href="tel:+380970824546" class="text-slate-400 hover:text-white transition-colors">+380 (97) 082-45-46</a>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm">
+                        <span class="text-slate-500">✉️</span>
+                        <a href="mailto:menora.khm@gmail.com" class="text-slate-400 hover:text-white transition-colors">menora.khm@gmail.com</a>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm">
+                        <span class="text-slate-500">🗓</span>
+                        <span class="text-slate-400">Щосуботи о 12:00</span>
+                    </div>
+                </div>
+
+                <!-- Соцмережі -->
+                <div class="space-y-3">
+                    <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">Ми онлайн</h4>
+                    <a href="https://t.me/menora_khm" target="_blank" class="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors group">
+                        <svg class="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                        Telegram-канал
+                    </a>
+                    <a href="https://www.instagram.com/menora_khm" target="_blank" class="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors group">
+                        <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                        Instagram
+                    </a>
+                    <a href="https://www.facebook.com/menora.proskuriv" target="_blank" class="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors group">
+                        <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        Facebook
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="pt-6 text-center text-xs text-slate-500">
+                <p>&copy; <span id="current-year"></span> Месіанська Єврейська Громада «Менора» — Хмельницький. Усі права захищені.</p>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Кнопка скролу вгору (Також переведена на темно-синій) -->
+    <button id="to-top-btn" aria-label="Прокрутити нагору" class="btn-primary fixed bottom-6 right-6 p-3 text-white rounded-xl transition-all duration-300 opacity-0 translate-y-10 pointer-events-none z-40" title="Нагору">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7 7 7M12 3v18"></path>
+        </svg>
+    </button>
+
+    <!-- Скріпти (Всі інтерактивні функції, ID та логіка збережені повністю) -->
+    <script>
+        // ==========================================
+        // 1. ЛОГІКА МОБІЛЬНОГО МЕНЮ (БУРГЕР)
+        // ==========================================
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const burgerIcon = document.getElementById('burger-icon');
+        const closeIcon = document.getElementById('close-icon');
+
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = mobileMenu.classList.contains('open');
+            if (isOpen) {
+                mobileMenu.classList.remove('open');
+                burgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            } else {
+                mobileMenu.classList.add('open');
+                burgerIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+            }
+        });
+
+        // Закриття мобільного меню при кліку поза ним
+        document.addEventListener('click', (e) => {
+            if (mobileMenu.classList.contains('open') && !mobileMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+                mobileMenu.classList.remove('open');
+                burgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            }
+        });
+
+        // ==========================================
+        // 2. ПЛАВНИЙ СКРОЛ ДЛЯ ПОСИЛАНЬ
+        // ==========================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault(); 
+                const targetId = this.getAttribute('href');
+                
+                if (targetId === '#') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    return;
+                }
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerOffset = 88; // висота хедера (80px) + відступ
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                }
+
+                mobileMenu.classList.remove('open');
+                burgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            });
+        });
+
+        // ==========================================
+        // 3. ІНТЕРАКТИВНИЙ АКОРДЕОН (FAQ)
+        // ==========================================
+        document.querySelectorAll('.faq-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const currentItem = btn.closest('.faq-item');
+                const currentContent = currentItem.querySelector('.faq-content');
+                const currentArrow = currentItem.querySelector('.faq-arrow');
+                const isOpen = currentContent.classList.contains('open');
+
+                // Закриваємо всі інші вкладки
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== currentItem) {
+                        item.querySelector('.faq-content').classList.remove('open');
+                        item.querySelector('.faq-arrow').classList.remove('rotate-180');
+                        item.classList.remove('border-blue-200', 'ring-1', 'ring-blue-100');
+                    }
+                });
+
+                // Перемикаємо стан поточної вкладки з плавною анімацією
+                currentContent.classList.toggle('open', !isOpen);
+                currentArrow.classList.toggle('rotate-180', !isOpen);
+                currentItem.classList.toggle('border-blue-200', !isOpen);
+                currentItem.classList.toggle('ring-1', !isOpen);
+                currentItem.classList.toggle('ring-blue-100', !isOpen);
+            });
+        });
+
+        // Логіка кнопки "Нагору"
+        const toTopBtn = document.getElementById('to-top-btn');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                toTopBtn.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+                toTopBtn.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                toTopBtn.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+                toTopBtn.classList.remove('opacity-100', 'translate-y-0');
+            }
+        });
+
+        toTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // ==========================================
+        // 4. АВТОМАТИЧНЕ СЛАЙДШОУ ДЛЯ ГОЛОВНОГО ЕКРАНУ
+        // ==========================================
+        const slides = document.querySelectorAll('#hero-slideshow .slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('opacity-45');
+            slides[currentSlide].classList.add('opacity-0');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.remove('opacity-0');
+            slides[currentSlide].classList.add('opacity-45');
+        }
+
+        setInterval(nextSlide, 4000);
+
+        // Автоматичне оновлення року у футері
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // ==========================================
+        // АВТОМАТИЧНЕ РОЗГОРТАННЯ БЛОКУ "ДЕТАЛЬНІШЕ"
+        // ==========================================
+        const aboutBtn = document.getElementById('toggle-about-btn');
+        const aboutContent = document.getElementById('expanded-about');
+        const aboutText = document.getElementById('toggle-about-text');
+        const aboutArrow = document.getElementById('toggle-about-arrow');
+
+        if (aboutBtn && aboutContent) {
+            aboutBtn.addEventListener('click', () => {
+                const isOpen = aboutContent.classList.contains('open');
+                aboutContent.classList.toggle('open', !isOpen);
+                aboutText.textContent = isOpen ? 'Детальніше' : 'Згорнути';
+                aboutArrow.classList.toggle('rotate-180', !isOpen);
+            });
+        }
+
+        // ==========================================
+        // АНІМАЦІЇ ПОЯВИ ПРИ СКРОЛІ (IntersectionObserver)
+        // ==========================================
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        function copyIban() {
+            const iban = "UA213052990000026001036004931";
+            const btnText = document.getElementById('copy-btn-text');
+            
+            // Перевіряємо, чи браузер взагалі підтримує Clipboard API
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(iban).then(() => {
+                    const originalText = btnText.textContent;
+                    btnText.textContent = 'Скопійовано!';
+                    setTimeout(() => { btnText.textContent = originalText; }, 2000);
+                }).catch(err => {
+                    // Якщо браузер заблокував доступ
+                    handleCopyError(btnText);
+                });
+            } else {
+                // Якщо API відсутнє
+                handleCopyError(btnText);
+            }
+        }
+
+        function handleCopyError(btnText) {
+            btnText.textContent = 'Натисніть на номер IBAN вище';
+            // Додаємо візуальний акцент, щоб користувач звернув увагу на номер
+            const ibanSpan = document.querySelector('.select-all');
+            if (ibanSpan) {
+                ibanSpan.classList.add('ring-2', 'ring-blue-400', 'bg-blue-50');
+                setTimeout(() => {
+                    ibanSpan.classList.remove('ring-2', 'ring-blue-400', 'bg-blue-50');
+                }, 3000);
+            }
+        }
+
+        // Знаходимо елементи
+        const detailsBlock = document.getElementById('details-block');
+        const qrBlock = document.getElementById('qr-block');
+        const toggleQrBtn = document.getElementById('toggle-qr-btn');
+        const toggleQrBtnMobile = document.getElementById('toggle-qr-btn-mobile');
+        const hideQrBtn = document.getElementById('hide-qr-btn');
+
+        // Логіка показу QR (без видалення з DOM, просто приховуємо через прозорість)
+        if (toggleQrBtn) {
+            toggleQrBtn.addEventListener('click', () => {
+                detailsBlock.classList.add('opacity-0', 'pointer-events-none'); // Приховуємо
+                qrBlock.classList.remove('opacity-0', 'pointer-events-none');   // Показуємо
+            });
+        }
+        if (toggleQrBtnMobile) {
+            toggleQrBtnMobile.addEventListener('click', () => {
+                detailsBlock.classList.add('opacity-0', 'pointer-events-none'); // Приховуємо
+                qrBlock.classList.remove('opacity-0', 'pointer-events-none');   // Показуємо
+            });
+        }
+
+        // Логіка повернення до реквізитів
+        if (hideQrBtn) {
+            hideQrBtn.addEventListener('click', () => {
+                qrBlock.classList.add('opacity-0', 'pointer-events-none');      // Приховуємо
+                detailsBlock.classList.remove('opacity-0', 'pointer-events-none'); // Показуємо
+            });
+        }
+
+        // ==========================================
+        // 5. ФУНКЦІЯ РУЧНОГО КОПІЮВАННЯ IBAN
+        // ==========================================
+        function copyManually() {
+            const text = document.getElementById('iban-field');
+            if (!text) return;
+            
+            const range = document.createRange();
+            range.selectNode(text);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            
+            // Візуальний відгук (підсвічування)
+            text.classList.add('ring-2', 'ring-blue-500');
+            setTimeout(() => {
+                text.classList.remove('ring-2', 'ring-blue-500');
+            }, 1000);
+        }
+
+        // ==========================================
+        // 6. РЕЄСТРАЦІЯ PWA SERVICE WORKER
+        // ==========================================
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker registered successfully!', reg))
+                    .catch(err => console.log('Service Worker registration failed:', err));
+            });
+        }
+
+        // ==========================================
+        // 7. SCROLLSPY — ПІДСВІЧУВАННЯ АКТИВНОГО МЕНЮ
+        // ==========================================
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section[id]');
+
+        function setActiveNav(id) {
+            navLinks.forEach(link => {
+                const isActive = link.getAttribute('data-nav') === id;
+                if (link.getAttribute('data-nav') === 'contacts') return; // contacts is a button
+                link.classList.toggle('text-blue-900', isActive);
+                link.classList.toggle('font-semibold', isActive);
+            });
+        }
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setActiveNav(entry.target.id);
+                }
+            });
+        }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+
+        sections.forEach(section => sectionObserver.observe(section));
+
+        // ==========================================
+        // 8. КНОПКА «ДОДАТИ В КАЛЕНДАР»
+        // ==========================================
+        function openCalendarMenu(e) {
+            e.preventDefault();
+            const menu = document.getElementById('calendar-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Закриття меню при кліку поза ним
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('calendar-menu');
+            const btn = document.getElementById('add-to-calendar-btn');
+            if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+
+        function downloadICS(e) {
+            e.preventDefault();
+            document.getElementById('calendar-menu').classList.add('hidden');
+            const icsContent = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'PRODID:-//Menorah Community//UA',
+                'CALSCALE:GREGORIAN',
+                'METHOD:PUBLISH',
+                'BEGIN:VEVENT',
+                'DTSTART;TZID=Europe/Kiev:20250607T120000',
+                'DTEND;TZID=Europe/Kiev:20250607T150000',
+                'RRULE:FREQ=WEEKLY;BYDAY=SA',
+                'SUMMARY:Шабат — Громада «Менора»',
+                'DESCRIPTION:Щотижневе шабатнє служіння о 12:00. Прославлення\, молитва\, вивчення Слова.',
+                'LOCATION:вулиця Романа Шухевича\, 8\, Хмельницький',
+                'END:VEVENT',
+                'END:VCALENDAR'
+            ].join('\n');
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'shabbat-menorah.ics';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // ==========================================
+        // 10. ЛІЧИЛЬНИК СТАТИСТИКИ (STATS COUNTER)
+        // ==========================================
+        const statsNumbers = document.querySelectorAll('.stats-number');
+        if (statsNumbers.length) {
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.dataset.done) {
+                        entry.target.dataset.done = '1';
+                        const target = parseInt(entry.target.dataset.target, 10);
+                        const suffix = entry.target.dataset.suffix || '';
+                        const duration = 1200;
+                        const step = Math.ceil(target / (duration / 30));
+                        let current = 0;
+                        const timer = setInterval(() => {
+                            current = Math.min(current + step, target);
+                            entry.target.textContent = current + suffix;
+                            if (current >= target) {
+                                clearInterval(timer);
+                                entry.target.classList.add('done');
+                            }
+                        }, 30);
+                    }
+                });
+            }, { threshold: 0.4 });
+            statsNumbers.forEach(el => statsObserver.observe(el));
+        }
+
+        // ==========================================
+        // 11. ТАЙМЕР ДО НАСТУПНОГО ШАБАТУ
+        // ==========================================
+        function updateShabbatCountdown() {
+            const now = new Date();
+            const dayOfWeek = now.getDay(); // 0=Sun, 6=Sat
+            const hours = now.getHours();
+
+            const timerBlock = document.getElementById('countdown-timer');
+            const shabbatShalomBlock = document.getElementById('countdown-shabbat-shalom');
+
+            // Якщо сьогодні субота і час 12:00–15:00 — шабат сьогодні!
+            if (dayOfWeek === 6 && hours >= 12 && hours < 15) {
+                if (timerBlock && shabbatShalomBlock) {
+                    timerBlock.classList.add('hidden');
+                    shabbatShalomBlock.classList.remove('hidden');
+                }
+                return;
+            } else {
+                if (timerBlock && shabbatShalomBlock) {
+                    timerBlock.classList.remove('hidden');
+                    shabbatShalomBlock.classList.add('hidden');
+                }
+            }
+
+            const target = new Date(now);
+            const daysUntilSat = dayOfWeek === 6 ? 7 : (6 - dayOfWeek + 7) % 7;
+            target.setDate(now.getDate() + daysUntilSat);
+            target.setHours(12, 0, 0, 0);
+
+            const diff = target - now;
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+            const cdDays = document.getElementById('cd-days');
+            const cdHours = document.getElementById('cd-hours');
+            const cdMins = document.getElementById('cd-mins');
+
+            if (cdDays && cdHours && cdMins) {
+                cdDays.textContent  = d;
+                cdHours.textContent = h;
+                cdMins.textContent  = m;
+            }
+        }
+        updateShabbatCountdown();
+        setInterval(updateShabbatCountdown, 60000);
+
+        // ==========================================
+        // 11. DOT-ІНДИКАТОРИ ДЛЯ МОБІЛЬНОІ ГАЛЕРЕЇ
+        // ==========================================
+        const galleryContainer = document.querySelector('.mobile-scroll-container');
+        const galleryCards = galleryContainer ? galleryContainer.querySelectorAll(':scope > div') : [];
+        const galleryDots = document.querySelectorAll('.gallery-dot');
+
+        if (galleryContainer && galleryCards.length && galleryDots.length) {
+            const dotObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const idx = Array.from(galleryCards).indexOf(entry.target);
+                        galleryDots.forEach((dot, i) => {
+                            dot.classList.toggle('bg-blue-900', i === idx);
+                            dot.classList.toggle('w-4', i === idx);
+                            dot.classList.toggle('bg-slate-300', i !== idx);
+                            dot.classList.toggle('w-2', i !== idx);
+                        });
+                    }
+                });
+            }, {
+                root: galleryContainer,
+                threshold: 0.5
+            });
+
+            galleryCards.forEach(card => dotObserver.observe(card));
+        }
+
+    </script>
+
+</body>
+</html>

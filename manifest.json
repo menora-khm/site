@@ -1,0 +1,24 @@
+{
+  "short_name": "Менора",
+  "name": "Єврейська Месіанська Громада «Менора»",
+  "description": "Спільнота віруючих в Ієшуа (Ісуса) як Месію Ізраїлю у Хмельницькому.",
+  "icons": [
+    {
+      "src": "assets/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#0f172a",
+  "theme-color": "#1e3a8a",
+  "display": "standalone",
+  "orientation": "portrait"
+}
