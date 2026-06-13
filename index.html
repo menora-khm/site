@@ -1442,7 +1442,10 @@
             }
 
             const target = new Date(now);
-            const daysUntilSat = dayOfWeek === 6 ? 7 : (6 - dayOfWeek + 7) % 7;
+            let daysUntilSat = (6 - dayOfWeek + 7) % 7;
+            if (dayOfWeek === 6 && hours >= 15) {
+                daysUntilSat = 7;
+            }
             target.setDate(now.getDate() + daysUntilSat);
             target.setHours(12, 0, 0, 0);
 
