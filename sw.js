@@ -1,4 +1,4 @@
-const CACHE_NAME = 'menorah-cache-v7';
+const CACHE_NAME = 'menorah-cache-v8';
 const ASSETS = [
   './',
   './index.html',
@@ -6,6 +6,7 @@ const ASSETS = [
   './assets/icon-maskable.png',
   './assets/favicon.png',
   './assets/qr_code_menorah.png',
+  './assets/qr_code_moed.png',
   './images/about-community.webp',
   './images/hero-bg-1.webp',
   './images/hero-bg-2.webp',
