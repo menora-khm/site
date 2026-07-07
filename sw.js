@@ -1,9 +1,10 @@
-const CACHE_NAME = 'menorah-cache-v9';
+const CACHE_NAME = 'menorah-cache-v10';
 const ASSETS = [
   './',
   './index.html',
   './assets/logo.png',
   './assets/icon-maskable.png',
+  './assets/tailwind.js',
   './assets/favicon.png',
   './assets/qr_code_menorah.png',
   './assets/qr_code_moed.png',
