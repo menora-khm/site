@@ -1,4 +1,4 @@
-const CACHE_NAME = 'menorah-cache-v8';
+const CACHE_NAME = 'menorah-cache-v9';
 const ASSETS = [
   './',
   './index.html',
